@@ -1,0 +1,65 @@
+openapi: "3.0.2"
+info:
+  title: COM2025 project
+  description: |-
+    A chat application, maybe a bit more. I don't even know yet tbh.
+  version: "1.0"
+paths:
+  /session/refresh:
+    post:
+      description: Refresh the API key and get a new refresh token
+      tags:
+        - authentication
+      responses:
+        401:
+          description: Expired or reused token
+        200:
+          $ref: "#/components/responses/TokenPair"
+  /users/create:
+    post:
+      description: Create new user
+      tags:
+        - authentication
+      responses:
+        409:
+          description: Username already in use
+        200:
+          $ref: "#/components/responses/TokenPair"
+  /users/authenticate:
+    post:
+      description: Sign in using username and password
+      tags:
+        - authentication
+      responses:
+        401:
+          description: Invalid credentials
+        200:
+          $ref: "#/components/responses/TokenPair"
+components:
+  responses:
+    InvalidToken:
+      description: Invalid token
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Unauthorized"
+    TokenPair:
+      description: Token pair
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TokenPair"
+  schemas:
+    Unauthorized:
+      type: object
+      properties:
+        error:
+          type: string
+          enum: [unauthorized]
+    TokenPair:
+      type: object
+      properties:
+        token:
+          type: string
+        refresh:
+          type: string
