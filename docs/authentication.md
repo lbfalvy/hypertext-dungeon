@@ -9,23 +9,23 @@ This is the authentication flow as seen from the client, taking into account the
 ### Main loop
 
 - #assess: see what's in persistent storage
-    - if it's an old pair of tokens but the refresh token is still valid
-        - write BUSY@(current timestamp);pair into persistent storage
-        - use refresh token with API
-            - if request fails, go to beginning
-        - if persistent storage did not change
-            - write results into persistent storage
-    - if it's empty or a pair of tokens with the refresh token expired
-        - ask the user for credentials (also wait for storage to change and react when it does)
-        - Obtain tokens from the API
-        - write the results into persistent storage
-    - if it's a new pair of tokens
-        - nothing to do
-    - if it's BUSY@time;pair
-        - wait until a short while after @time
-            (configuration parameter: retry timeout)
-        - if it did not change, write pair to persistent storage
-        - go to beginning
+  - if it's an old pair of tokens but the refresh token is still valid
+    - write BUSY@(current timestamp);pair into persistent storage
+    - use refresh token with API
+      - if request fails, go to beginning
+    - if persistent storage did not change
+      - write results into persistent storage
+  - if it's empty or a pair of tokens with the refresh token expired
+    - ask the user for credentials (also wait for storage to change and react when it does)
+    - Obtain tokens from the API
+    - write the results into persistent storage
+  - if it's a new pair of tokens
+    - nothing to do
+  - if it's BUSY@time;pair
+    - wait until a short while after @time
+      (configuration parameter: retry timeout)
+    - if it did not change, write pair to persistent storage
+    - go to beginning
 - read new tokens from persistent storage
 - wait until the access token is about to expire or persistent storage changes (configuration parameter: time to expiration)
 - go to beginning
@@ -55,6 +55,6 @@ Refresh tokens are stored along with identifiers of the users they belong to, th
 
 # Contents of the tokens
 
-The refresh token includes its own expiry and the username.  
-The access token contains, besides the regular JWT fields like expiry, the fields necessary to programmatically handle permission management.  
+The refresh token includes its own expiry and the username. 
+The access token contains, besides the regular JWT fields like expiry, the fields necessary to programmatically handle permission management. 
 The access token does NOT contain the user profile, which can be requested from the API. This is both to simplify the token renewal system and to make the token as short as possible since it's included in every request. The fields in the token may be read by clients and used to preemptively reject actions for which the user does not have permission.

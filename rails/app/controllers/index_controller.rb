@@ -1,4 +1,6 @@
 class IndexController < ApplicationController
-    def index
-    end
+  skip_forgery_protection
+
+  def index
+  end
 end

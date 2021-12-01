@@ -7,3 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 root = User.create(username: 'root', password: '0000')
+
+lounge = Game::Room.create
+wardrobe = Game::Box.create
+box = Game::Box.create
+wardrobe.set('weapons', box)
+box.set('..', wardrobe)
+lounge.set('wardrobe', wardrobe)
+wardrobe.set('..', lounge)
+root_role = Game::Role.for_player(root, lounge)

@@ -228,7 +228,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-   ruby 2.5.9p229
+   ruby 3.0.2p107
 
 BUNDLED WITH
-   1.17.3
+   2.2.22

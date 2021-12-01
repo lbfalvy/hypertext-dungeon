@@ -35,6 +35,70 @@ paths:
           description: Invalid credentials
         200:
           $ref: "#/components/responses/TokenPair"
+  /game/tree:
+    get:
+      description: |-
+        Obtain a depth-first tree of the game from the role's perspective
+      tags:
+        - game
+      parameters:
+        - name: role
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: path
+          in: query
+          required: false
+          schema:
+            type: string
+            format: path
+      responses:
+        400:
+          description: |-
+            The specified role doesn't exist or isn't linked to the
+            current user
+        200:
+          description: Depth-first tree
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameObject"
+  /game/act:
+    post:
+      description: |-
+        Any effect the player has on the game world is an action.
+      tags:
+        - game
+      parameters:
+        - name: role
+          in: query
+          required: false
+          schema:
+            type: number
+      requestBody:
+        description: Contains all about the action to be taken
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                object_path:
+                  type: string
+                  format: path
+                target_path:
+                  type: string
+                  format: path
+      responses:
+        400:
+          description: |-
+            The specified role doesn't exist or isn't linked to the
+            current user
+        200:
+          description: Action succcessfully completed
 components:
   responses:
     InvalidToken:
@@ -63,3 +127,56 @@ components:
           type: string
         refresh:
           type: string
+    GameObject:
+      type: object
+      properties:
+        id:
+          type: number
+        type:
+          type: string
+          description: |-
+            The class name for this node; may be used to support custom
+            client-side enumerations, although duck-typing and reacting
+            to supported actions is probably preferable.
+        version:
+          type: number
+          description: |-
+            A number that starts from zero and is incremented every time
+            a visible property is modified. It's included in change
+            events so the client can avoid skipping events due to
+            temporary cover without keeping track of object visibility.
+            (change events aren't delivered for invisible objects.)
+        targetedBy:
+          description: |-
+            Action types that can target this object. For example, the
+            target of an "attack" event would be the enemy.
+          type: object
+          properties:
+            name:
+              type: string
+            can_target:
+              description: Always true
+              type: boolean
+        actionTypes:
+          description: |-
+            Action types that can use this object. For example, the
+            object of an "attack" event would be the weapon.
+          type: object
+          properties:
+            name:
+              type: string
+            can_target:
+              description: |-
+                Whether the action has a target. If not, clients must set
+                the target to match the object.
+              type: boolean
+        entries:
+          description: |-
+            Children of the GameObject, if they appeared previously in
+            the depth-first search, only their ID is included.
+          type: object
+          additionalProperties:
+            anyOf:
+              - $ref: "#/components/schemas/GameObject"
+              - description: ID of the child if it appeared previously
+                type: number

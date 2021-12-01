@@ -1,0 +1,83 @@
+class Action
+  attr_reader :target
+  attr_reader :target_path
+  attr_reader :object
+  attr_reader :object_path
+  attr_reader :subject
+  attr_reader :type
+  attr_reader :data
+
+  def name() = @type.name
+
+  def initialize(type, subject, object, target, object_path, target_path, data)
+    @type = type
+    @subject = subject
+    @data = data
+    unless object.action_types.any? { |t| t == type } and !target or target.targeted_by.any? { |t| t == type }
+      raise Exception.new 'Unsupported action'
+    end
+    @object = object
+    @target = target
+    @object_path = object_path
+    @target_path = target_path
+  end
+
+  def call_handlers
+    exec_result = @object.execute self
+    int_result = @target.interact self, exec_result if @target
+    { interact: int_result, execute: exec_result }
+  end
+
+  # target may be nil
+  def self.make(type, subject, object_path, target_path, data=nil)
+    # Trisect paths and ancestries
+    common_path, object_subpath, target_subpath = (
+      target_path ?
+        Paths.common(object_path, target_path) :
+        [[], object_path, nil]
+    )
+    common_ancestry = subject.resolve_path common_path
+    common_ancestry.unshift subject # Also gets intercept and react
+    object_ancestry = common_ancestry.last.resolve_path object_subpath
+    object = object_ancestry.last || common_ancestry.last
+    target = nil
+    if target_subpath != nil
+      target_ancestry = common_ancestry.last.resolve_path target_subpath
+      target = target_ancestry.last || common_ancestry.last
+    end
+    # Construct action object
+    action = Action.new(type, subject, object, target, object_path, target_path, data)
+    # Pair each ancestor with its respective path segment
+    with_subpaths = common_ancestry.map do |ancestor|
+      result = [ancestor, object_path, target_path]
+      object_path = object_path[1..-1] || []
+      target_path = target_path[1..-1] || [] unless target_path == nil
+      next result
+    end
+    with_subpaths.concat object_ancestry.map { |ancestor|
+      result = [ancestor, object_path, nil]
+      object_path = object_path[1..-1] || []
+      next result
+    }.to_a
+    with_subpaths.concat target_ancestry.map { |ancestor|
+      result = [ancestor, nil, target_path]
+      target_path = target_path[1..-1] || []
+      next result
+    }.to_a
+    with_subpaths.each do |ancestor, op, tp|
+      begin
+        ancestor.intercept(action, op, tp)
+      rescue => e
+        p e
+        return false
+      ensure
+      end
+    end
+    p "Now calling handlers"
+    results = action.call_handlers
+    with_subpaths.each do |ancestor, op, tp|
+      ancestor.react(action, results[:interact], results[:execute], op, tp)
+    end
+    return true
+  end
+end
