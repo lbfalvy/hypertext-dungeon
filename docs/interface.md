@@ -19,8 +19,7 @@ interface GameObject {
   targetable: Property<ActionType[]> // Action types specify which classes they target
 
   /** Handlers for actions */
-  execute?(a: Action): ObjectResult // Called on the object
-  interact?(a: Action, o: ObjectResult): TargetResult // Called on the target
+  execute?(a: Action): Result // Called on the object
 
   /**
    * Displayed in the tree structure
@@ -35,7 +34,7 @@ interface GameObject {
    * op and tp are relative, at least one of them is defined
    */
   intercept?(a: Action, op?: Path|void, tp?: Path|void) // Before (can throw to prevent action)
-  react?(a: Action, or: ObjectResult, tr: TargetResult, op?: Path|void, tp?: Path|void) // after 
+  react?(a: Action, or: ObjectResult, op?: Path|void, tp?: Path|void) // after 
   
   /**
    * Objects from where sound events can be heard

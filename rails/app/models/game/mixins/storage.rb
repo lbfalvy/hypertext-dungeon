@@ -9,13 +9,6 @@ module Game::Mixins
       base.after_create do
         self.targeted_by << @put_action
       end
-
-      # base.interact do |action, object_result|
-      #   if action == @put_action and 
-      #     self.set(action.object)
-      #     return { status: :success }
-      #   end
-      # end
     end
 
     def receive_put(name, object)

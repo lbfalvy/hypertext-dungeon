@@ -120,8 +120,7 @@ class GameObject < ApplicationRecord
   end
   dispatchable :intercept # action, object_path=nil, target_path=nil
   dispatchable :execute # action
-  dispatchable :interact # action, execute_result
-  dispatchable :react # action, execute_result, interact_result, object_path=nil, target_path=nil
+  dispatchable :react # action, execute_result, object_path=nil, target_path=nil
   dispatchable :handle_event # event, audience
   dispatchable :perceive_change # object, property, value
 end

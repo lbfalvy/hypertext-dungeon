@@ -22,12 +22,6 @@ class Action
     @target_path = target_path
   end
 
-  def call_handlers
-    exec_result = @object.execute self
-    int_result = @target.interact self, exec_result if @target
-    { interact: int_result, execute: exec_result }
-  end
-
   # target may be nil
   def self.make(type, subject, object_path, target_path, data=nil)
     # Trisect paths and ancestries
@@ -65,18 +59,11 @@ class Action
       next result
     }.to_a
     with_subpaths.each do |ancestor, op, tp|
-      begin
-        ancestor.intercept(action, op, tp)
-      rescue => e
-        p e
-        return false
-      ensure
-      end
+      ancestor.intercept(action, op, tp)
     end
-    p "Now calling handlers"
-    results = action.call_handlers
+    results = object.execute action
     with_subpaths.each do |ancestor, op, tp|
-      ancestor.react(action, results[:interact], results[:execute], op, tp)
+      ancestor.react(action, results, op, tp)
     end
     return true
   end

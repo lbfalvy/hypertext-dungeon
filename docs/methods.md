@@ -9,7 +9,6 @@
 5. Parse object's and target's state, enqueueing any GameObjects for load.
 6. Call each intercept handler, if any throws, halt the whole thing
 7. Call execute on object
-8. Call interact on target
 9. Call react handlers, they cannot throw but they can trigger new Actions.
 
 ## When a user enters
