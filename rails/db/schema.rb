@@ -30,16 +30,10 @@ ActiveRecord::Schema.define(version: 2021_11_24_164749) do
   create_table "entries", force: :cascade do |t|
     t.integer "parent_id", null: false
     t.string "name"
+    t.boolean "hidden"
     t.integer "child_id", null: false
     t.index ["child_id"], name: "index_entries_on_child_id"
     t.index ["parent_id"], name: "index_entries_on_parent_id"
-  end
-
-  create_table "event_paths", force: :cascade do |t|
-    t.integer "source_id", null: false
-    t.integer "destination_id", null: false
-    t.index ["destination_id"], name: "index_event_paths_on_destination_id"
-    t.index ["source_id"], name: "index_event_paths_on_source_id"
   end
 
   create_table "game_objects", force: :cascade do |t|
@@ -79,8 +73,6 @@ ActiveRecord::Schema.define(version: 2021_11_24_164749) do
 
   add_foreign_key "entries", "game_objects", column: "child_id", on_delete: :cascade
   add_foreign_key "entries", "game_objects", column: "parent_id", on_delete: :cascade
-  add_foreign_key "event_paths", "game_objects", column: "destination_id", on_delete: :cascade
-  add_foreign_key "event_paths", "game_objects", column: "source_id", on_delete: :cascade
   add_foreign_key "roles_users", "game_objects", column: "role_id", on_delete: :cascade
   add_foreign_key "roles_users", "users", on_delete: :cascade
   add_foreign_key "targets_actions", "game_objects", column: "action_type_id", on_delete: :cascade

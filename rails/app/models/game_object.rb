@@ -34,15 +34,27 @@ class GameObject < ApplicationRecord
     self.version += 1
   end
 
+  def visible_entries() = entries.whene(hidden: false)
+
   # Tree navigation methods
-  def get(name) = entries.find_by(name: name).child rescue nil
-  def set(name, value)
+  def get(name, include_hidden=false)
+    set = include_hidden ? entries : visible_entries
+    set.find_by(name: name).child rescue nil
+  end
+  def set(name, value, hidden=false)
     raise Exception.new 'Name in use' if get(name)
-    entry = Entry.create(name: name, child: value)
+    entry = Entry.create(name: name, child: value, hidden: hidden)
     self.entries << entry
   end
-  def namesfor(child) = entries.where(child: child).map(&:name) rescue nil
-  def unlink(name) = entries.find_by(name: name).destroy rescue raise(Exception.new 'Entry not found')
+  def namesfor(child, include_hidden=false)
+    set = include_hidden ? entries : visible_entries
+    set.where(child: child).map(&:name) rescue nil
+  end
+  def unlink(name, include_hidden=false)
+    set = include_hidden ? entries : visible_entries
+    entries.find_by(name: name).destroy rescue raise(Exception.new 'Entry not found')
+  end
+  def list() = entries.where(hidden: false)
 
   # Recursively get()
   def resolve_path(path)
