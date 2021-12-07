@@ -57,13 +57,42 @@ paths:
         400:
           description: |-
             The specified role doesn't exist or isn't linked to the
-            current user
+            current user, or one of the paths was invalid
         200:
           description: Depth-first tree
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/GameObject"
+  /game/node:
+    get:
+      description: |-
+        Details about an individual node without fetching its descendants
+      tags:
+        - game
+      parameters:
+        - name: role
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: path
+          in: query
+          required: false
+          schema:
+            type: string
+            format: path
+      responses:
+        400:
+          description: |-
+            The specified role doesn't exist or isn't linked to the
+            current user, or one of the paths was invalid
+        200:
+          description: The object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShallowGameObject"
   /game/act:
     post:
       description: |-
@@ -92,6 +121,8 @@ paths:
                 target_path:
                   type: string
                   format: path
+                data:
+                  $ref: "#/components/schemas/Any"
       responses:
         400:
           description: |-
@@ -150,26 +181,12 @@ components:
           description: |-
             Action types that can target this object. For example, the
             target of an "attack" event would be the enemy.
-          type: object
-          properties:
-            name:
-              type: string
-            can_target:
-              description: Always true
-              type: boolean
+          $ref: "#/components/schemas/ActionType"
         actionTypes:
           description: |-
             Action types that can use this object. For example, the
             object of an "attack" event would be the weapon.
-          type: object
-          properties:
-            name:
-              type: string
-            can_target:
-              description: |-
-                Whether the action has a target. If not, clients must set
-                the target to match the object.
-              type: boolean
+          $ref: "#/components/schemas/ActionType"
         entries:
           description: |-
             Children of the GameObject, if they appeared previously in
@@ -180,3 +197,42 @@ components:
               - $ref: "#/components/schemas/GameObject"
               - description: ID of the child if it appeared previously
                 type: number
+    ShallowGameObject:
+      description: |-
+        See GameObject for details
+      type: object
+      properties:
+        id:
+          type: number
+        type:
+          type: string
+          description: Unchanged
+        version:
+          type: number
+          description: Unchanged
+        targetedBy:
+          $ref: "#/components/schemas/ActionType"
+        actionTypes:
+          $ref: "#/components/schemas/ActionType"
+        entries:
+          description: |-
+            Children of the GameObject by ID.
+          type: object
+          additionalProperties:
+            type: number
+    ActionType:
+      description: An action as chosen by the user
+      type: object
+      properties:
+        name:
+          type: string
+        can_target:
+          description: Unchanged
+          type: boolean
+    Any:
+      oneOf:
+        - type: array
+        - type: boolean
+        - type: number
+        - type: object
+        - type: string

@@ -14,21 +14,22 @@ class Event
     format(key, @data)
   end
 
-  def spread(location, targets = Set.new([location]))
+  def spread(location, targets = { location => 0 }, distance = 1)
     propagate(location).each do |child|
-      next if targets === child
-      targets << child
-      spread(child, targets)
+      next if targets.include?(child) && targets[child] <= distance
+      targets[child] = distance
+      spread(child, targets, distance +1)
     end
     targets
   end
 
-  def propagate(location) = location.parents.chain(location.sound_destinations)
+  def propagate(location) = location.parents
 
   def self.emit(origin, actors, data)
+    Rails.logger.info "Emitting #{self} from #{origin}"
     event = self.new(actors, data)
-    audience = self.spread origin
-    audience.each { |target| target.handle_event(event, audience) }
+    audience = event.spread origin
+    audience.each { |target, distance| target.handle_event(event, audience) }
   end
 
   def format() = 'Something happened'

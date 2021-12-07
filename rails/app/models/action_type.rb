@@ -13,6 +13,6 @@ class ActionType < ApplicationRecord
     return instance || self.create(name: name.to_s, can_target: can_target)
   end
 
-  def serialize() = { name: name, can_target: can_target }
+  def serialize() = { name: name, canTarget: can_target }
   def serialize_short() = serialize
 end

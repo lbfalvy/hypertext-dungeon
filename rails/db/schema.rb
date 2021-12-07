@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_164749) do
 
   create_table "game_objects", force: :cascade do |t|
     t.string "type"
-    t.decimal "version"
+    t.integer "version"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

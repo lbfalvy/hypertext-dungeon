@@ -1,0 +1,30 @@
+.Prompt {
+  position: relative;
+  display: flex;
+  margin: 4px;
+  &::before {
+    content: "";
+    position: absolute;
+    box-sizing: border-box;
+    top: 0; bottom: 0;
+    left: calc(.5em + 2px);
+    right: calc(.5em + 2px);
+    border-bottom: 2px solid #bbb;
+  }
+  &.active::after {
+    border-bottom-color: #eee;
+  }
+  input {
+    flex: 1 1 auto;
+    z-index: 100;
+    font-family: inherit;
+    color: white;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border: none;
+    border-radius: 500px;
+    background-color: #fff2;
+    padding: 2px calc(.5em + 2px);
+  }
+}

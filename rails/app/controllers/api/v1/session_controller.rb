@@ -21,7 +21,7 @@ module Api
       end
       token_record = Token.find_by(token: bearer)
       # If a record with this token is not found, it must have been stolen.
-      unless token_record
+      unless token_record && User.find_by(username: token['username'])
         Token.where(user: token['username']).destroy_all
         render json: { error: 'token reuse' }, status: :unauthorized and return
       end

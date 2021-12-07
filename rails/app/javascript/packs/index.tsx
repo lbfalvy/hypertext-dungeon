@@ -6,12 +6,12 @@ import Main from '../Main'
 const root = document.createElement('div')
 root.id = 'root'
 ReactDOM.render(
-    <BrowserRouter>
-        <Main/>
-    </BrowserRouter>,
-    root
+  <BrowserRouter>
+    <Main/>
+  </BrowserRouter>,
+  root
 )
 
 window.addEventListener('DOMContentLoaded', () => {
-    document.body.append(root)
+  document.body.append(root)
 })

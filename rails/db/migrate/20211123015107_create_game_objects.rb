@@ -2,7 +2,7 @@ class CreateGameObjects < ActiveRecord::Migration[6.1]
   def change
     create_table :game_objects do |t|
       t.string :type
-      t.numeric :version
+      t.integer :version
       t.timestamps
     end
     create_table :entries do |t|

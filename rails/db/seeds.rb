@@ -6,7 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-root = User.create(username: 'root', password: '0000')
+james = User.create(username: 'james', password: '0')
+robert = User.create(username: 'robert', password: '0')
 
 lounge = Game::Room.create
 wardrobe = Game::Box.create
@@ -15,4 +16,5 @@ wardrobe.set('weapons', box)
 box.set('..', wardrobe)
 lounge.set('wardrobe', wardrobe)
 wardrobe.set('..', lounge)
-root_role = Game::Role.for_player(root, lounge)
+james_role = Game::Role.for_player(james, lounge)
+robert_role = Game::Role.for_player(robert, lounge)

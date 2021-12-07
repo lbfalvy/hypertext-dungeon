@@ -15,10 +15,10 @@ module Game::Mixins
         if action.type == @put_action and action.target.respond_to? :receive_put
           parent = self.get('..')
           name = action.object_path.last || parent.namesfor(self).first
-          parent.unlink(name)
           action.target.receive_put(name, self)
           self.unlink('..')
           self.set('..', action.target)
+          parent.unlink(name)
           next { status: :success, name: name }
         end
       end

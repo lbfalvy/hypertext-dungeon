@@ -975,10 +975,59 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@lbfalvy/mini-events@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@lbfalvy/mini-events/-/mini-events-2.0.2.tgz#cda75b1c3e0968c83ee90695579a3ebeceba7bff"
-  integrity sha512-avHQr2fnN7YaOI8KvoSXddOHqfp4InQjupLVl3n0t9PpWz/RTGgJ8UV9EcHwF0grBq57YDY6CrE90miZHRweCg==
+"@lbfalvy/array-utils@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@lbfalvy/array-utils/-/array-utils-1.0.0.tgz#74d840f0440b38a843fe384c169e0d9426804368"
+  integrity sha512-9h0h/3sZYA38I662AoDZywN3kP7Y06Vbj9lys4NpYRlB8kI1ZpvN1ayedNz3XhWKsOc/s6HUAZUTNajphYTbqg==
+
+"@lbfalvy/mini-events@3":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@lbfalvy/mini-events/-/mini-events-3.0.0.tgz#36e24249fe1e5d25488200e45aeba1b72a877e5b"
+  integrity sha512-8qzvmhq5S15VkLIAKG2y1jQN2oS8mh2xeoVO/l9VjVuuNp9oh5ut88ppXESQhlShWZjriQH2hbYkHkTBwvsjKQ==
+
+"@lbfalvy/mini-events@^1.1.2":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@lbfalvy/mini-events/-/mini-events-1.1.3.tgz#87efad71c5f1c868e68ce69bdd512fdf60ecc094"
+  integrity sha512-xQywmmvJCnJYOCQdtYxARtXVZll7ycocACgnJVEjcIYoV/c1ytMRtcgS8dg+lapJ/10sF5u3MELhzs8UDNDC/w==
+
+"@lbfalvy/react-await@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@lbfalvy/react-await/-/react-await-3.0.3.tgz#be80507de6e3813102cce2d634bc41aba9a2f577"
+  integrity sha512-+nUmatB2Bj7i9fOwofUR/D1IrFr6hMyw1Hl2IBNvNHc0wxXLQU99s6W2E2nD53h1Rqjq2nlYvP2Hn4oLEaCY4g==
+  dependencies:
+    "@lbfalvy/array-utils" "^1.0.0"
+    "@lbfalvy/react-utils" "^1.0.1"
+    "@lbfalvy/when" "^4.1.0"
+    react "17"
+    react-is "^17.0.2"
+
+"@lbfalvy/react-context-menu@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@lbfalvy/react-context-menu/-/react-context-menu-1.0.0.tgz#99f70dcd6b9ef5db9b7b047fb46a99dc703d0a81"
+  integrity sha512-IFOabajC96GqKXJ61FhVoobKmTUShqYWp1zvrNd/PIdLNnfgTcwkb9RdnW88/Cw3p6IentqR4VZ+4PeaWh5ojg==
+  dependencies:
+    "@lbfalvy/react-utils" "^1.0.3"
+    "@lbfalvy/usedimensions" "^1.0.0"
+
+"@lbfalvy/react-utils@^1.0.1", "@lbfalvy/react-utils@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@lbfalvy/react-utils/-/react-utils-1.0.3.tgz#1618677dfda8be7bd29d16fe79202b839616f5fa"
+  integrity sha512-ykRnjeTONCDX32UvwFxJRh3RpQXnA+luLrFDN/Zf8zpGEYF3RyRaZAuO6afiPuHIYAAmTaJfnuB/S4kvREr0oQ==
+  dependencies:
+    "@lbfalvy/when" "^4.0.0"
+    react-is "^17.0.2"
+
+"@lbfalvy/usedimensions@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@lbfalvy/usedimensions/-/usedimensions-1.0.0.tgz#6a8b8d796385221203e0ebcebed9a6298926a47a"
+  integrity sha512-WD+5kSJt6eDAGTUTJUMiX2Bqt8nHXi8nAy48etEZ7TR0rjYtQqvxdqed9vmlh084p+E5P7KzAXhNV7L5lGMT5g==
+
+"@lbfalvy/when@^4.0.0", "@lbfalvy/when@^4.1.0":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@lbfalvy/when/-/when-4.1.1.tgz#5465ba46122f1b701864ea8292842954aa9d0239"
+  integrity sha512-CZB6DcwG2lf93hfInWuXTfIAJY1KL+ZTdI52RT7xDr1lZEj7h+NhLoiKwIPyMHJo6PxYLMFiliELMgzFdGjJIQ==
+  dependencies:
+    "@lbfalvy/mini-events" "^1.1.2"
 
 "@npmcli/fs@^1.0.0":
   version "1.0.0"
@@ -996,10 +1045,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@rails/actioncable@^6.0.0":
-  version "6.1.4"
-  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.1.4.tgz#c3c5a9f8302c429af9722b6c50ab48049016d2a3"
-  integrity sha512-0LmSKJTuo2dL6BQ+9xxLnS9lbkyfz2mBGeBnQ2J7o9Bn0l0q+ZC6VuoZMZZXPvABI4QT7Nfknv5WhfKYL+boew==
+"@rails/actioncable@^6.1.4-1":
+  version "6.1.4-1"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.1.4-1.tgz#69982e7f352d732f71fda0cc01b7ba8269c9945b"
+  integrity sha512-b6sLoMop3gX22Wm2P5LPpKcZGwsf1ZoAGS+g1HrTrdlsZ/ENOKIBiSNnHOJajHwcYlF0TefBs7e7jIYZHVYihQ==
 
 "@rails/activestorage@^6.0.0":
   version "6.1.4"
@@ -1056,6 +1105,11 @@
     webpack-assets-manifest "^3.1.1"
     webpack-cli "^3.3.12"
     webpack-sources "^1.4.3"
+
+"@types/actioncable@^5.2.7":
+  version "5.2.7"
+  resolved "https://registry.yarnpkg.com/@types/actioncable/-/actioncable-5.2.7.tgz#b42de922ba32f1a46c863df1ed32807ab08dda80"
+  integrity sha512-HVpCvvE4Att0vSfCVNHf3gmCoqQPlySWIhH4THkG4r0hc0IcvRa0gIVyd9ekswMf3WiBsDc52OKnduIZQ7qcRw==
 
 "@types/glob@^7.1.1":
   version "7.2.0"
@@ -1293,6 +1347,11 @@ actioncable-jwt@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/actioncable-jwt/-/actioncable-jwt-1.1.0.tgz#fbcf7d27b3ee5fa3090474b81e21ed843a1b152a"
   integrity sha512-WPD8RQ5pYazWpesx2G5eRjAFKZrihF5PZzcuNPHLbeRimL0BVHayv7jwyEYO8QVAhgaTVgNC+hEnfqUq5EVAEA==
+
+actioncable@^5.2.6:
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/actioncable/-/actioncable-5.2.6.tgz#cea30647183524f3bae8c2a78fa6ecd6d4dbc70c"
+  integrity sha512-ofLHm57nN24zghkl+tQe6IVrZeSJ655lNLQjNQJvtQkeTDqlF30McuMB4o9DqpxdHgW/w0RNWaAQHB6VPlleNQ==
 
 aggregate-error@^3.0.0:
   version "3.1.0"
@@ -5746,6 +5805,11 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-is@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
+  integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
 react-router-dom@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.0.2.tgz#860cefa697b9d4965eced3f91e82cdbc5995f3ad"
@@ -5761,7 +5825,7 @@ react-router@6.0.2:
   dependencies:
     history "^5.1.0"
 
-react@^17.0.2:
+react@17, react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
@@ -6086,6 +6150,11 @@ selfsigned@^1.10.8:
   integrity sha512-aVmbPOfViZqOZPgRBT0+3u4yZFHpmnIghLMlAcb5/xhp5ZtB/RVnKhz5vl2M32CLXAqR4kha9zfhNg0Lf/sxKA==
   dependencies:
     node-forge "^0.10.0"
+
+semaphore-async-await@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/semaphore-async-await/-/semaphore-async-await-1.5.1.tgz#857bef5e3644601ca4b9570b87e9df5ca12974fa"
+  integrity sha1-hXvvXjZEYBykuVcLh+nfXKEpdPo=
 
 semver@7.0.0:
   version "7.0.0"

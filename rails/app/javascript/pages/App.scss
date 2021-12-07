@@ -1,0 +1,22 @@
+.App {
+  // Necessary to prevent components from changing the size
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: grid;
+  grid-template-rows: 1fr min-content;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: 
+    'tree log'
+    'tree prompt';
+  .tree {
+    grid-area: tree;
+    overflow: auto;
+  }
+  .log {
+    grid-area: log;
+  }
+  .prompt {
+    grid-area: prompt;
+  }
+}

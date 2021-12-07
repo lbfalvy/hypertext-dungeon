@@ -1,6 +1,17 @@
-1. Finish migrations to get the tables set up
-2. Unfuck the model objects
-3. Start defining logic
+## ToDo
+
+- &check; Finish GameTree / visual (I can not believe that I spent all Saturday on that stupid bug)
+- &check; Implement Prompt / slash commands
+- &check; test cable and gameStateService
+- &check; Extract the context menu component from pro-ui into its own component
+- &check; Finish GameTree / interact
+- &check; fix bugs with action system
+- add doors
+- Write demo scene
+- finish registration logic
+- actually look at coursework brief
+
+---
 
 ## Links for later
 

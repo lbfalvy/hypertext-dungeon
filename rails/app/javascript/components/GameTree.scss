@@ -1,0 +1,24 @@
+.TreeNode {
+  & > .TreeChildren { margin-left: 2ch; }
+}
+.GameTree {
+  overflow: auto;
+}
+.NameTag {
+  cursor: pointer;
+  white-space: pre;
+  display: inline-block;
+  width: 100%;
+  .Toggle {
+    display: inline-block;
+    margin-right: 1ch;
+  }
+  &.hover {
+    background-color: #fff1;
+  }
+  .target {
+    color: #a55;
+    display: inline-block;
+    margin-left: 1ch;
+  }
+}

@@ -34,11 +34,8 @@ class Action
     common_ancestry.unshift subject # Also gets intercept and react
     object_ancestry = common_ancestry.last.resolve_path object_subpath
     object = object_ancestry.last || common_ancestry.last
-    target = nil
-    if target_subpath != nil
-      target_ancestry = common_ancestry.last.resolve_path target_subpath
-      target = target_ancestry.last || common_ancestry.last
-    end
+    target_ancestry = common_ancestry.last.resolve_path target_subpath if target_subpath
+    target = target_ancestry.last || common_ancestry.last if target_ancestry
     # Construct action object
     action = Action.new(type, subject, object, target, object_path, target_path, data)
     # Pair each ancestor with its respective path segment
@@ -57,10 +54,11 @@ class Action
       result = [ancestor, nil, target_path]
       target_path = target_path[1..-1] || []
       next result
-    }.to_a
+    }.to_a if target_ancestry
     with_subpaths.each do |ancestor, op, tp|
       ancestor.intercept(action, op, tp)
     end
+    Rails.logger.info "#{subject} executed #{type} with #{object} on #{target} for #{data}"
     results = object.execute action
     with_subpaths.each do |ancestor, op, tp|
       ancestor.react(action, results, op, tp)

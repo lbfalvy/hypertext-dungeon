@@ -28,31 +28,37 @@ class GameObject < ApplicationRecord
   def on_targeted_by_rm(at) = self.alert_parents(:remove, :targeted_by, at)
   def on_action_type_rm(at) = self.alert_parents(:remove, :action_types, at)
   def alert_parents(change, property, value)
+    self.version += 1
     self.ancestry.each do |parent, path|
       parent.perceive_change(change, property, value, path, version)
     end
-    self.version += 1
   end
 
-  def visible_entries() = entries.whene(hidden: false)
+  def visible_entries() = entries.select{ |e| e.hidden == false }
 
   # Tree navigation methods
   def get(name, include_hidden=false)
     set = include_hidden ? entries : visible_entries
-    set.find_by(name: name).child rescue nil
+    set.find{ |e| e.name == name }.child rescue nil
   end
   def set(name, value, hidden=false)
-    raise Exception.new 'Name in use' if get(name)
+    raise ArgumentError.new "Name \"#{name}\" in use" if get(name)
     entry = Entry.create(name: name, child: value, hidden: hidden)
     self.entries << entry
+    entry.save
+    value.occurences.reload
   end
   def namesfor(child, include_hidden=false)
     set = include_hidden ? entries : visible_entries
-    set.where(child: child).map(&:name) rescue nil
+    set.select{ |e| e.child == child }.map(&:name) rescue nil
   end
   def unlink(name, include_hidden=false)
     set = include_hidden ? entries : visible_entries
-    entries.find_by(name: name).destroy rescue raise(Exception.new 'Entry not found')
+    target = set.find{ |e| e.name == name }
+    child = target.child
+    raise Exception.new 'Entry not found' unless target
+    entries.destroy(target)
+    child.occurences.reload
   end
   def list() = entries.where(hidden: false)
 
@@ -61,14 +67,14 @@ class GameObject < ApplicationRecord
     object = self
     ancestry = []
     path.each do |name|
-      object = object.get(name)
-      ancestry.push(object || raise(Exception.new 'Invalid path'))
+      object = object.get(name) || raise(ArgumentError.new "Invalid path: \"#{path[0..ancestry.length].join('/')}\"")
+      ancestry.push(object)
     end
     ancestry
   end
 
   # Find all nodes accessible in a given direction
-  def ancestry(hash={}, path=[''])
+  def ancestry(hash={}, path=[])
     return if hash[self]
     hash[self] = path
     self.occurences.each do |occurence|
@@ -103,8 +109,8 @@ class GameObject < ApplicationRecord
       id: id,
       type: self.class.name,
       version: self.version,
-      action_types: action_types.to_a.map(&:serialize),
-      targeted_by: targeted_by.to_a.map(&:serialize),
+      actionTypes: action_types.to_a.map(&:serialize),
+      targetedBy: targeted_by.to_a.map(&:serialize),
       entries: entries.to_h { |entry| [entry.name, entry.child.serialize(known)]}
     }
   end

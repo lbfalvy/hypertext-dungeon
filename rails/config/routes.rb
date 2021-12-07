@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       get 'users/auto_login'
       get 'game/roles'
       get 'game/tree'
+      get 'game/node'
       post 'game/act'
     end
   end
